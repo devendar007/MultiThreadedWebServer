@@ -10,13 +10,15 @@ public class Server{
                                                             return two things one is socket object (where client and server can communicates) and another is info about the client
                                                             like its ip and its port*/
             System.out.println("Client accepted:"+acceptedConnection.getRemoteSocketAddress()); //it will print the ip and port of the client
-            PrintWriter toClient=new PrintWriter(acceptedConnection.getOutputStream());  /* so here getOutputStream() retrieves outputstream which will help us to send data to client 
+            PrintWriter toClient=new PrintWriter(acceptedConnection.getOutputStream(),true);  /* so here getOutputStream() retrieves outputstream which will help us to send data to client 
                                                                                           but here  is a catch that it deals with bytes and we can't write data in bytes so here our hero
                                                                                           printwriter comes into the game it convert the text into the bytes and send to outputstream     */
             BufferedReader fromClient=new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream())); /* getinputStream retreives data form the inputstream in the form of bytes
                                                                                                                           and inputstreamreader converts those bytes into the text and with the  help
                                                                                                                           of bufferedreader we can read text line by line or character by character*/
             toClient.println("hello from devendar's server");
+            String clientText=fromClient.readLine();
+        System.out.println(clientText);
             toClient.close();
             fromClient.close();
             acceptedConnection.close();
