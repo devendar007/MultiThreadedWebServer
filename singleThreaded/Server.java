@@ -4,8 +4,10 @@ public class Server{
     public void run() throws IOException{   //here i have throw ioException because networking involves i/o operations and it can fail that is no client connect or networking issues
         int port =8080;   //it is like a door for my this server if you reached this door you can connect to my server
         ServerSocket socket=new ServerSocket(port); // here i have ServerSocket which listens for client requests and accpets it
-        System.out.println("Server is running on port:"+port);
+        socket.setSoTimeout(20000);
+       
         while(true){
+             System.out.println("Server is running on port:"+port);
             Socket acceptedConnection=socket.accept();  /*here code flow will stuck here  until the client detects if client detects it will
                                                             return two things one is socket object (where client and server can communicates) and another is info about the client
                                                             like its ip and its port*/
@@ -17,8 +19,8 @@ public class Server{
                                                                                                                           and inputstreamreader converts those bytes into the text and with the  help
                                                                                                                           of bufferedreader we can read text line by line or character by character*/
             toClient.println("hello from devendar's server");
-            String clientText=fromClient.readLine();
-        System.out.println(clientText);
+            // String clientText=fromClient.readLine();
+        // System.out.println(clientText);
             toClient.close();
             fromClient.close();
             acceptedConnection.close();
@@ -39,3 +41,37 @@ public class Server{
 
     }
 }
+// import java.io.BufferedReader;
+// import java.io.IOException;
+// import java.io.InputStreamReader;
+// import java.io.PrintWriter;
+// import java.net.ServerSocket;
+// import java.net.Socket;
+// import java.net.UnknownHostException;
+
+// public class Server {
+    
+//     public void run() throws IOException, UnknownHostException{
+//         int port = 8010;
+//         ServerSocket socket = new ServerSocket(port);
+//         socket.setSoTimeout(20000);
+//         while(true){
+//             System.out.println("Server is listening on port: "+port);
+//             Socket acceptedConnection = socket.accept();
+//             System.out.println("Connected to "+acceptedConnection.getRemoteSocketAddress());
+//             PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream(), true);
+//             BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream()));
+//             toClient.println("Hello World from the server");
+//         }
+//     }
+
+//     public static void main(String[] args){
+//         Server server = new Server();
+//         try{
+//             server.run();
+//         }catch(Exception ex){
+//             ex.printStackTrace();
+//         }
+//     }
+
+// }
